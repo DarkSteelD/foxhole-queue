@@ -409,6 +409,11 @@ async def on_ready():
     log.info(f"Logged in as {bot.user.name}, guilds: {[g.id for g in bot.guilds]}")
     await fetch_maps()
     try:
+        from planes import setup as planes_setup
+        await planes_setup(bot)
+    except Exception as e:
+        log.error(f"Failed to load planes cog: {e}")
+    try:
         synced = await bot.tree.sync()
         log.info(f"Synced {len(synced)} slash commands")
     except Exception as e:
